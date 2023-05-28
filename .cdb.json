@@ -1,0 +1,11 @@
+{
+    "type": "MOD",
+    "name": "more_player_monoids",
+    "title": "more_player_monoids",
+    "license": "LGPL-3.0-or-later",
+    "media_license": "CC-BY-SA-4.0",
+    "repo": "https://github.com/fluxionary/minetest-more_player_monoids.git",
+    "website": "https://github.com/fluxionary/minetest-more_player_monoids",
+    "issue_tracker": "https://github.com/fluxionary/minetest-more_player_monoids/issues",
+    "short_description": "TODO: write a description"
+}
