@@ -13,16 +13,24 @@ local mul = function(a, b)
 	return a * b
 end
 
-local all = futil.functional.all
-local any = futil.functional.any
-local sum = futil.math.sum
-local prod = function(t, i)
-	i = i or 1
-	for j = 1, #t do
-		i = i * t[j]
-	end
-	return i
-end
+local fold = {
+	any = function(t)
+		return futil.functional.iany(futil.iterators.values(t))
+	end,
+	all = function(t)
+		return futil.functional.iall(futil.iterators.values(t))
+	end,
+	sum = function(t)
+		return futil.math.isum(futil.iterators.values(t))
+	end,
+	prod = function(t)
+		local prod = 1
+		for _, v in pairs(t) do
+			prod = prod * v
+		end
+		return prod
+	end,
+}
 
 local function set_physics_override(key)
 	return function(value, player)
@@ -35,21 +43,21 @@ end
 more_player_monoids.sneak = player_monoids.make_monoid({
 	identity = true,
 	combine = and_,
-	fold = all,
+	fold = fold.all,
 	apply = set_physics_override("sneak"),
 })
 
 more_player_monoids.sneak_glitch = player_monoids.make_monoid({
 	identity = false,
 	combine = or_,
-	fold = any,
+	fold = fold.any,
 	apply = set_physics_override("sneak_glitch"),
 })
 
 more_player_monoids.new_move = player_monoids.make_monoid({
 	identity = true,
 	combine = and_,
-	fold = all,
+	fold = fold.all,
 	apply = set_physics_override("new_move"),
 })
 
@@ -66,63 +74,63 @@ end
 more_player_monoids.hud_hotbar = player_monoids.make_monoid({
 	identity = true,
 	combine = and_,
-	fold = all,
+	fold = fold.all,
 	apply = set_hud_flags("hotbar"),
 })
 
 more_player_monoids.hud_healthbar = player_monoids.make_monoid({
 	identity = true,
 	combine = and_,
-	fold = all,
+	fold = fold.all,
 	apply = set_hud_flags("healthbar"),
 })
 
 more_player_monoids.hud_crosshair = player_monoids.make_monoid({
 	identity = true,
 	combine = and_,
-	fold = all,
+	fold = fold.all,
 	apply = set_hud_flags("crosshair"),
 })
 
 more_player_monoids.hud_wielditem = player_monoids.make_monoid({
 	identity = true,
 	combine = and_,
-	fold = all,
+	fold = fold.all,
 	apply = set_hud_flags("wielditem"),
 })
 
 more_player_monoids.hud_breathbar = player_monoids.make_monoid({
 	identity = true,
 	combine = and_,
-	fold = all,
+	fold = fold.all,
 	apply = set_hud_flags("breathbar"),
 })
 
 more_player_monoids.hud_minimap = player_monoids.make_monoid({
 	identity = true,
 	combine = and_,
-	fold = all,
+	fold = fold.all,
 	apply = set_hud_flags("minimap"),
 })
 
 more_player_monoids.hud_minimap_radar = player_monoids.make_monoid({
 	identity = true,
 	combine = and_,
-	fold = all,
+	fold = fold.all,
 	apply = set_hud_flags("minimap_radar"),
 })
 
 more_player_monoids.hud_basic_debug = player_monoids.make_monoid({
 	identity = true,
 	combine = and_,
-	fold = all,
+	fold = fold.all,
 	apply = set_hud_flags("basic_debug"),
 })
 
 more_player_monoids.hud_chat = player_monoids.make_monoid({
 	identity = true,
 	combine = and_,
-	fold = all,
+	fold = fold.all,
 	apply = set_hud_flags("chat"),
 })
 
@@ -139,7 +147,7 @@ end
 more_player_monoids.saturation = player_monoids.make_monoid({
 	identity = 1,
 	combine = mul,
-	fold = prod,
+	fold = fold.prod,
 	apply = set_lighting("saturation"),
 })
 
@@ -148,7 +156,7 @@ more_player_monoids.saturation = player_monoids.make_monoid({
 more_player_monoids.day_night_ratio = player_monoids.make_monoid({
 	identity = nil,
 	combine = add,
-	fold = sum,
+	fold = fold.sum,
 	apply = function(value, player)
 		if value then
 			value = (math.atan(value) + (math.pi / 2)) / math.pi
