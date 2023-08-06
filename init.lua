@@ -107,23 +107,23 @@ more_player_monoids.hud_breathbar = player_monoids.make_monoid({
 })
 
 more_player_monoids.hud_minimap = player_monoids.make_monoid({
-	identity = true,
-	combine = and_,
-	fold = fold.all,
+	identity = false,
+	combine = or_,
+	fold = fold.any,
 	apply = set_hud_flags("minimap"),
 })
 
 more_player_monoids.hud_minimap_radar = player_monoids.make_monoid({
-	identity = true,
-	combine = and_,
-	fold = fold.all,
+	identity = false,
+	combine = or_,
+	fold = fold.any,
 	apply = set_hud_flags("minimap_radar"),
 })
 
 more_player_monoids.hud_basic_debug = player_monoids.make_monoid({
-	identity = true,
-	combine = and_,
-	fold = fold.all,
+	identity = false,
+	combine = or_,
+	fold = fold.any,
 	apply = set_hud_flags("basic_debug"),
 })
 
@@ -170,3 +170,20 @@ more_player_monoids.day_night_ratio = player_monoids.make_monoid({
 		end
 	end,
 })
+
+--
+
+if more_player_monoids.has.player_api then
+	more_player_monoids.player_attached = player_monoids.make_monoid({
+		identity = false,
+		combine = or_,
+		fold = fold.any,
+		apply = function(value, player)
+			if value then
+				player_api.player_attached[player:get_player_name()] = true
+			else
+				player_api.player_attached[player:get_player_name()] = nil
+			end
+		end,
+	})
+end

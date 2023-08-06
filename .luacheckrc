@@ -648,10 +648,12 @@ stds.minetest = {
 stds.more_player_monoids = {
 	globals = {
 		"more_player_monoids",
+		player_api = {fields = {"player_attached"}},
 	},
 	read_globals = {
 		"fmod",
 		"futil",
 		"player_monoids",
+		"player_api",
 	},
 }
