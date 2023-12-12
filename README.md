@@ -19,5 +19,5 @@ more monoids to prevent other mobs from clobbering each other when modifying pla
 | hud_basic_debug   | the player can see basic debug info                                | false    | anything true  |
 | hud_chat          | the player can see chat in the HUD                                 | true     | nothing false  |
 | saturation        | lighting saturation multiplier                                     | 1        | multiplicative |
-| day_night_ratio   | control's how lighting appears                                     | nil      | additive       |
+| day_night_ratio   | controls how lighting appears                                      | nil      | additive       |
 | player_attached   | if true, animations will not be updated and knockback is prevented | false    | anything true  |
