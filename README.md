@@ -1,6 +1,6 @@
 # more_player_monoids
 
-more monoids to prevent other mobs from clobbering each other when modifying player attributes.
+more monoids, to allow multiple mods to modify player attributes, without clobbering each other.
 
 ## API
 
